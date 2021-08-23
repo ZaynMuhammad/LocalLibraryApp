@@ -8,12 +8,15 @@ const mongoose = require("mongoose");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const catalogRouter = require("./routes/catalog"); //Import routes for "catalog" area of site
+const compression = require("compression");
+const helmet = require("helmet");
 
 const app = express();
 
 // connect to mongodb
-const mongoDB =
+const dev_db_url =
   "mongodb+srv://Zayn:DWyB08N0I64CAwE4@zayncluster.vuhm7.mongodb.net/local_library?retryWrites=true&w=majority";
+const mongoDB = process.env.MONGODB_URL || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.log.bind(console, "MongoDB connection error:"));
@@ -23,6 +26,9 @@ app.set("views", path.join(__dirname, "views"));
 // app.set("view engine", "ejs");
 app.set("view engine", "pug");
 
+app.use(helmet());
+// Use nginx for high traffic sites instead of compression
+app.use(compression()); //Compress all routes
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
