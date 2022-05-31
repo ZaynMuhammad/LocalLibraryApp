@@ -15,7 +15,7 @@ const app = express();
 
 // connect to mongodb
 const dev_db_url =
-  "mongodb+srv://Zayn:DWyB08N0I64CAwE4@zayncluster.vuhm7.mongodb.net/local_library?retryWrites=true&w=majority";
+  "mongodb+srv://Zayn95:zzMMoo02264@cluster0.vuhm7.mongodb.net/local_library?retryWrites=true&w=majority";
 const mongoDB = process.env.MONGODB_URL || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
